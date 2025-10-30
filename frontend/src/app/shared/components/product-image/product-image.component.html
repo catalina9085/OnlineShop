@@ -1,0 +1,11 @@
+@if(product().images && product().images.length>0){
+  <div [routerLink]="['/product',product().id]">
+  @if(product().images[0].savingOption==0){
+    <img mat-card-image [src]="product().images[0].url">
+  }
+  @else{
+    <img mat-card-image [src]="imageUrl()">
+  }
+  </div>
+}
+

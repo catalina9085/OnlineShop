@@ -1,0 +1,52 @@
+<app-header [message]="'Shopping cart'"></app-header>
+<div class="items-container d-flex flex-column gap-3 p-3">
+  @if(items().length==0){
+    <div class="text-center text-muted p-4 w-100 mt-xxl-5">
+      <p>Your cart feels lonely... add something fun!</p>
+    </div>
+
+  }
+  @for(item of items();track item.id;let i=$index){
+    <div class="item ">
+      <div class="d-flex gap-3">
+        @if(item.product.images[0].savingOption==0){
+          <img mat-card-image [src]="item.product.images[0].url" [routerLink]="['/product',item.product.id]">
+        }
+        @else{
+          <img mat-card-image [src]="getImageUrl(item.product)" [routerLink]="['/product',item.product.id]">
+        }
+        <div class="d-flex flex-column fs-6">
+          <b>{{item.product.name}}</b>
+          <div [ngClass]="{'alert':item.product.stock<5}">{{item.product.stock}} left</div>
+          @if(item.product.discount>0){
+            <div>
+              <span style="color:red">{{item.product.finalPrice}} RON </span>
+              <span style="font-size:13px;text-decoration:line-through;"> ({{item.product.price}})</span>
+            </div>
+          }
+          @else{
+            <div>{{item.product.price}} RON</div>
+          }
+        </div>
+      </div>
+      <div class="d-flex gap-3 align-items-center">
+        <div class="quantity">
+          <button (click)="decrement(i)">-</button>
+          <span>{{item.quantity }}</span>
+          <button (click)="increment(i)">+</button>
+        </div>
+        <button mat-icon-button (click)="deleteFromCart(item.id,i)"><mat-icon>delete</mat-icon></button>
+      </div>
+    </div>
+  }
+</div>
+
+
+<div class="footer" >
+  <div class="fs-6">
+    <b>Total:</b> {{getTotal()}} RON
+  </div>
+  <button mat-raised-button color="primary" (click)="placeOrder()">Place Order</button>
+</div>
+
+<app-notification></app-notification>

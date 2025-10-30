@@ -1,0 +1,22 @@
+#container{
+  background-image: url("../../../public/auth.jpg");
+  background-size:cover;
+  background-position: center;
+  height:100vh;
+}
+
+form{
+  background-color:rgba(255,255,255,0.7);
+  padding:30px 60px 30px 60px;
+  border-radius: 20px;
+}
+
+h1{
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}

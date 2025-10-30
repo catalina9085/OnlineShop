@@ -1,0 +1,53 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  max-width: 600px;
+  margin: auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  margin: 5px 0;
+}
+
+.user {
+  justify-content: flex-end; /* în dreapta */
+}
+
+.chat {
+  justify-content: flex-start; /* în stânga */
+}
+
+.message mat-card {
+  max-width: 70%;
+  padding: 8px 12px;
+}
+
+.message.user mat-card {
+  background: #1976d2;
+  color: white;
+}
+
+.message.bot mat-card {
+  background: #f1f1f1;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.input-field {
+  flex: 1;
+}

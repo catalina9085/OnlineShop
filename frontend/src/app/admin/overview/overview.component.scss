@@ -1,0 +1,32 @@
+mat-icon{
+    font-size:35px;
+    border:1px solid #ccc;
+    border-radius:50%;
+    padding:30px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+h1{
+  background:#7e57c2;
+  margin-top: 40px;
+  text-align: center;
+  color:white;
+  font-family: cursive;
+  padding:10px;
+}
+
+
+.product-card-wrapper {
+  flex: 1 1 20%;   /* încearcă să ocupe 20% din container */
+  min-width: 180px; /* nu se face mai mic de 180px */
+  max-width: 250px; /* opțional, limită superioară */
+  padding: 10px;
+}
+
+app-product-card {
+  width: 100%;   /* foarte important: să ocupe tot spațiul disponibil */
+  height: auto;  /* să se scaleze */
+}

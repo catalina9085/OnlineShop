@@ -1,0 +1,18 @@
+<mat-card appearance="outlined">
+  <app-product-image [product]="product()"></app-product-image>
+  <mat-card-content class="d-flex justify-content-between mt-3">
+  <div class="d-flex flex-column">
+    <div>{{product().name}}</div>
+    @if(product().discount>0){
+      <div>
+        <span style="color:red">{{product().finalPrice}} RON </span>
+        <span style="font-size:13px;text-decoration:line-through;"> ({{product().price}})</span>
+      </div>
+    }
+    @else{
+      <div>{{product().price}} RON</div>
+    }
+  </div>
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>

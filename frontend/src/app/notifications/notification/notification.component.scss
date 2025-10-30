@@ -1,0 +1,49 @@
+.notif-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 16px 24px;
+  color: #4a148c;
+  width: 60%;
+  max-width: 480px;
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 16px rgba(126, 87, 194, 0.5);
+  border-left: 6px solid #7e57c2;
+
+  opacity: 0;
+  animation: slideFadeIn 0.5s ease forwards;
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100px);
+  }
+}
+
+/* adaugi clasa asta când vrei să dispară */
+.notif-container.hide {
+  animation: slideFadeOut 0.5s ease forwards;
+}
+
+.close{
+  cursor:pointer;
+}

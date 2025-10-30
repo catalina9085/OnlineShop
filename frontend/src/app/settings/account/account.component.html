@@ -1,0 +1,36 @@
+<div style="background-color: white;border-radius:20px;box-shadow: 0 4px 12px rgba(0,0,0,0.1);" class="p-3 w-100 h-100">
+
+<div>
+  <form #changePasswordForm="ngForm" (ngSubmit)="onSubmit(changePasswordForm)" class="d-flex flex-column gap-1 w-25" style="min-width: 250px">
+    <h2>Change password</h2>
+    <div>{{message()}}</div>
+    <mat-form-field>
+      <mat-label>Current password</mat-label>
+      <input matInput type="password" name="current" [ngModel]="changePasswordRequest().currentPassword" (ngModelChange)="currentPasswordChanged($event)" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>New password</mat-label>
+      <input matInput type="password" name="new" [ngModel]="changePasswordRequest().newPassword" (ngModelChange)="newPasswordChanged($event)" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Confirm password</mat-label>
+      <input matInput type="password" name="confirm" [ngModel]="changePasswordRequest().confirmPassword" (ngModelChange)="confirmPasswordChanged($event)" required>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">submit</button>
+  </form>
+</div>
+
+<div class="mt-5">
+  <h2>Delete account</h2>
+  @if(showConfirmDelete()){
+    <span>Are you sure you want to delete your account?This action in permanent.</span>
+    <button mat-button color="primary" (click)="confirmDelete()">confirm delete</button>
+  }
+  @else{
+    <button mat-button color="primary" (click)="deleteAccount()">delete acccount</button>
+  }
+
+</div>
+
+
+</div>

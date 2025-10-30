@@ -1,0 +1,23 @@
+<div style="background-color: white;border-radius:20px;box-shadow: 0 4px 12px rgba(0,0,0,0.1);" class="p-3 w-100 h-100">
+
+
+<mat-button-toggle-group [ngModel]="status()" (ngModelChange)="statusChanged($event)" class="half-toggle" appearance="legacy">
+  <mat-button-toggle [value]="'PAID'">Paid</mat-button-toggle>
+  <mat-button-toggle [value]="'PENDING'">Pending</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div class="d-flex flex-column gap-2 mt-4">
+@if(status()=='PAID'){
+  @for(order of paidOrders();track order.id){
+    <app-order-card [order]="order" (orderDeleted)="updateOrders()"></app-order-card>
+  }
+}
+@else{
+  @for(order of pendingOrders();track order.id){
+    <app-order-card [order]="order" (orderDeleted)="updateOrders()"></app-order-card>
+  }
+}
+</div>
+
+
+</div>

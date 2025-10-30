@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-between align-items-center p-4 banner">
+
+  <app-sidenav></app-sidenav>
+  <div style="font-family: cursive" class="fs-3">{{message()}}</div>
+
+  <div class="d-flex gap-2">
+    @if(message()!='Wishlist'){
+      <button mat-icon-button aria-label="Go to wishlist" routerLink="/wishlist">
+        <mat-icon>favorite</mat-icon>
+      </button>
+    }
+    @if(message()!='Shopping cart'){
+      <button mat-icon-button aria-label="Go to wishlist" routerLink="/cart">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+    }
+    <button mat-icon-button aria-label="Go to wishlist" routerLink="/home">
+      <mat-icon>home</mat-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div id="container" class="d-flex justify-content-center align-items-center">
+<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="d-flex flex-column gap-1 align-items-center justify-content-center">
+  <h1>Register</h1>
+  @if(errorMessage()){<div>{{errorMessage()}}</div>}
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput type="text" name="email" [ngModel]="registerRequest().email"  (ngModelChange)="emailChanged($event)" placeholder="email" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput type="text" name="username" [ngModel]="registerRequest().username"  (ngModelChange)="usernameChanged($event)" placeholder="username" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" name="password" [ngModel]="registerRequest().password"  (ngModelChange)="passwordChanged($event)" placeholder="password" required>
+  </mat-form-field>
+
+  <mat-form-field>
+  <mat-label>Confirm password</mat-label>
+  <input matInput type="password" name="confirm" [ngModel]="registerRequest().confirmPassword"  (ngModelChange)="confirmPasswordChanged($event)" placeholder="confirm password" required>
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button color="primary">submit</button>
+
+</form>
+</div>

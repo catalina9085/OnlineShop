@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/css/admin/addNewProduct.css">
+	<title>Add new product</title>
+</head>
+
+<body>
+	<div class="mainContainer">
+	<h1>Add new product</h1>
+	<div id="message"></div>
+	<form id="addProductForm">
+		<div id="uploadFiles">
+		<h3>Upload Files</h3>
+		<div id="customUploadContainer">
+			<i class="fa fa-upload"></i>
+			<button id="customUploadButton">Browse File</button>
+			<span id="customUploadText">No file chosen</span>
+		</div><br>
+		<div id="savingOptions" class="flex">
+			<label for="cloud"><input type="checkbox" id="cloud">Store images in cloud</label>
+			<label for="database"><input type="checkbox" id="database">Store images in database</label>
+		</div>
+		<input type="file" id="files" multiple>
+		</div>
+		<div id="generalInfo">
+			<div>
+				<h3>General Information</h3>
+				<input type="text" id="name" placeholder="product name" required><br>
+				<textarea id="description" placeholder="description" required></textarea><br>
+				<input type="number" id="price" placeholder="product price" required><br>
+				<input type="number" id="stock" placeholder="product stock" required><br>
+			</div>
+			<div>
+				<h3>Category</h3>
+				<input type="text" id="newCategory" name="newCategory" placeholder="New category(optional)" optional><br>
+				<select id="productCategory" name="productCategory">
+					<option value="">Select a category</option>
+				</select>
+			</div>
+			</div>
+			<button type="submit">add product</button>
+	</form>	
+	</div>
+	<div id="notifContainer" style="display:none;">
+		<div id="notification">test</div>
+		<div id="hideNotification">╳</div>
+	</div>
+	<script src="/js/admin/addProduct.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+			<script src="/js/socket.js"></script>
+</body>
+
+</html>

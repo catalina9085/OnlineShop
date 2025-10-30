@@ -1,0 +1,49 @@
+<app-header [message]="'Overview'"></app-header>
+
+<div class="d-flex justify-content-around mt-5">
+  <div class="d-flex gap-3 align-items-center">
+    <mat-icon color="accent">shopping_cart</mat-icon>
+    <div>
+      <b class="fs-3">{{overview().soldProducts}}</b>
+      <div style="color:gray">Sold products</div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-3 align-items-center">
+    <mat-icon color="accent">local_shipping</mat-icon>
+    <div>
+      <b class="fs-3">{{overview().placedOrders}}</b>
+      <div style="color:gray">Placed orders</div>
+    </div>
+  </div>
+
+  <div class="d-flex gap-3 align-items-center">
+    <mat-icon color="accent">attach_money</mat-icon>
+    <div>
+      <b class="fs-3">{{overview().total}}</b>
+      <div style="color:gray">Total intake</div>
+    </div>
+  </div>
+
+</div>
+
+<h1>Top 5 Best Sellers</h1>
+
+<div class="d-flex flex-wrap justify-content-around">
+  @for(product of overview().bestSellers; track product.id) {
+    <div class="product-card-wrapper">
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  }
+</div>
+
+
+<h1>Revenue</h1>
+<app-revenue-chart
+  [dailyRevenue]="overview().dailyRevenue"
+  [weeklyRevenue]="overview().weeklyRevenue"
+  [monthlyRevenue]="overview().monthlyRevenue">
+</app-revenue-chart>
+
+
+<app-notification></app-notification>

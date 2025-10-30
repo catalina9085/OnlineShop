@@ -1,0 +1,8 @@
+.mat-button-toggle {
+  background-color: white;
+
+  &.mat-button-toggle-checked {
+    background-color: #3f51b5;
+    color:white;// culoarea `primary`
+  }
+}

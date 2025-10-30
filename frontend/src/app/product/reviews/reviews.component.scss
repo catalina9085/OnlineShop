@@ -1,0 +1,14 @@
+.review {
+  border-left: 4px solid #7e57c2; /* mov accent */
+  background: #f8f5fc; /* fundal foarte deschis mov */
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(126, 87, 194, 0.1); /* umbră subtilă mov */
+  transition: transform 0.2s ease;
+}
+
+.review:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(126, 87, 194, 0.2);
+}

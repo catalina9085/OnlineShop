@@ -1,0 +1,8 @@
+<span
+  *ngFor="let _ of stars; let i = index"
+  (click)="onClick(i + 1)"
+  [style]="rating() > i
+            ? 'filter: none; opacity: 1'
+            : 'filter: grayscale(100%) brightness(90%); opacity: 0.3'">
+  ⭐
+</span>

@@ -1,0 +1,24 @@
+input{
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  margin:5px;
+  padding:7px;
+  width:50vw;
+}
+
+.banner{
+  background-image: url("../../../../public/auth.jpg");
+  background-size:cover;
+  background-position: center;
+  color:white;
+}
+
+mat-icon:hover{
+  cursor:pointer;
+  color:lightgrey;
+  transition: all 0.3s ease-in-out;
+
+}

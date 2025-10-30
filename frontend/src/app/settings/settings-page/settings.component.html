@@ -1,0 +1,20 @@
+<div class="d-flex w-100 h-100">
+  <mat-list>
+    <button mat-icon-button [routerLink]="['/home']">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <mat-list-item routerLink="/settings/shipment" routerLinkActive="active">Add shipment information</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="/settings/account" routerLinkActive="active">Manage my account</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="/settings/notifications" routerLinkActive="active">Notifications</mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item routerLink="/settings/orders" routerLinkActive="active">Order history</mat-list-item>
+  </mat-list>
+  <div class="flex-grow-1 p-4 overflow-y-auto" style="background-color:#ffccdd">
+    <router-outlet></router-outlet>
+  </div>
+
+</div>
+
+<app-notification></app-notification>

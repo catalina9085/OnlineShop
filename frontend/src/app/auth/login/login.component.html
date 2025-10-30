@@ -1,0 +1,27 @@
+
+<div id="container" class="d-flex justify-content-center align-items-center">
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="d-flex flex-column gap-1 align-items-center justify-content-center">
+  <h1>Login</h1>
+
+  @if(errorMessage()){<div>{{errorMessage()}}</div>}
+  @if(message()){<div>{{message()}}</div>}
+
+  <mat-form-field>
+    <mat-label>Email/Username</mat-label>
+    <input matInput type="text" name="username" [ngModel]="loginRequest().username"  (ngModelChange)="emailChanged($event)" placeholder="email/username" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" name="identifier" [ngModel]="loginRequest().password"  (ngModelChange)="passwordChanged($event)" placeholder="password" required>
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">submit</button>
+  <div>
+    <span>You don't have an account yet?</span>
+    <button type="button" mat-button color="primary" routerLink="/auth/register">sign up</button>
+  </div>
+  <div>
+    <span>Did you forget your password?</span>
+    <button type="button" mat-button color="primary" routerLink="/auth/resetPassword">reset password</button>
+  </div>
+</form>
+</div>

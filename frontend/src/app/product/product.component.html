@@ -1,0 +1,61 @@
+<app-header [message]="''"></app-header>
+
+<div class="p-4">
+  <div class="d-flex gap-3 align-items-start">
+    <h2 class="fw-bold">{{product().name}}</h2>
+    <div class="mt-1">
+      @for(i of getStars(product().rating);track i){⭐}
+    </div>
+  </div>
+<div class="d-flex flex-wrap gap-3">
+  @for(image of product().images;track image;let i=$index){
+    @if(image.savingOption==0){
+      <img mat-card-image [src]="image.url">
+    }
+    @else{
+      <img mat-card-image [src]="imageUrls()[i]">
+    }
+  }
+</div>
+<div class="d-flex flex-column mt-4 fs-6">
+    @if(product().discount>0){
+      <div>
+        <span style="color:red">{{product().finalPrice}} RON </span>
+        <span style="font-size:13px;text-decoration:line-through;"> ({{product().price}})</span>
+      </div>
+    }
+    @else{
+      <div>{{product().price}} RON</div>
+    }
+  <div><b>Description: </b>{{product().description}}</div>
+  <div><b>Category: </b>{{product().category.name}}</div>
+  <div><b>Stock: </b>{{product().stock}}</div>
+
+  <div class="d-flex gap-3 mb-3 mt-3">
+    <button mat-raised-button color="accent" (click)="addToWishlist()">
+      <mat-icon class="me-1">favorite</mat-icon>
+      Add to Wishlist
+    </button>
+    <button mat-raised-button color="primary" (click)="addToCart()">
+      <mat-icon class="me-1" >shopping_cart</mat-icon>
+      Add to Cart
+    </button>
+  </div>
+
+</div>
+
+<mat-divider></mat-divider>
+
+<app-reviews [reviews]="product().reviews" [productId]="product().id"></app-reviews>
+
+
+  <h1>Similar products</h1>
+  <div class="d-flex gap-3 flex-wrap">
+    @for(product of recommended();track product.id){
+      <app-product-card [product]="product"></app-product-card>
+    }
+  </div>
+</div>
+
+
+<app-notification></app-notification>

@@ -1,0 +1,13 @@
+<app-header [message]="'Product list'"></app-header>
+<div class="d-flex flex-wrap gap-2 justify-content-center align-items-center mt-3">
+  @for(product of products();track product.id;let i=$index){
+    <app-product-card [product]="product">
+      <div>
+        <button mat-icon-button (click)="deleteProduct(product.id,i)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/admin/new',product.id]"><mat-icon>edit</mat-icon></button>
+      </div>
+    </app-product-card>
+  }
+</div>
+
+<app-notification></app-notification>

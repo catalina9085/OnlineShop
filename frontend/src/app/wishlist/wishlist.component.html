@@ -1,0 +1,20 @@
+<app-header [message]="'Wishlist'"></app-header>
+<div class="d-flex flex-wrap gap-2 justify-content-start align-items-center m-3 ms-5">
+  @if(products().length==0){
+    <div class="text-center text-muted p-4 w-100 mt-xxl-5">
+      <p>No favorites yet — start saving the things you love! ❤️</p>
+    </div>
+  }
+  @for(product of products();track product.id;let i=$index){
+    <app-product-card [product]="product">
+      <div class="d-flex gap-1">
+        <button mat-icon-button (click)="removeFromWishlist(product.id,i)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button (click)="addToCart(product.id)"><mat-icon>shopping_cart</mat-icon></button>
+      </div>
+    </app-product-card>
+
+  }
+</div>
+
+
+<app-notification></app-notification>

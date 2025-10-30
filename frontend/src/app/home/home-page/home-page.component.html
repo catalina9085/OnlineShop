@@ -1,0 +1,17 @@
+<app-filter (filterChange)="filterChanged($event)" [categories]="store.categories()"></app-filter>
+<div class="d-flex flex-wrap gap-2 justify-content-center align-items-center">
+  @if(store.products().length==0){
+    <div class="text-center text-muted p-4 w-100 mt-xxl-5">
+      <p>Oops! We couldn’t find any products that match your search</p>
+    </div>
+  }
+  @for(product of store.products();track product.id){
+   <app-product-card [product]="product">
+     <button mat-icon-button
+             (click)="toggleFavourite(product)"
+             [ngClass]="{'added':product.inWishlist}"
+             ><mat-icon>favorite</mat-icon></button>
+   </app-product-card>
+  }
+</div>
+<app-notification></app-notification>

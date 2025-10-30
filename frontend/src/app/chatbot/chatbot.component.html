@@ -1,0 +1,24 @@
+
+  <div class="chat-container">
+
+    <div class="messages">
+      @for(message of messages();track message){
+        <div class="message" [ngClass]="message.sender">
+          <mat-card>{{message.message}}</mat-card>
+        </div>
+      }
+    </div>
+
+    <div class="chat-input">
+      <mat-form-field appearance="outline" class="input-field">
+        <input matInput [ngModel]="newMessage().message" (ngModelChange)="newMessageChanged($event)" placeholder="Ask a question...">
+      </mat-form-field>
+      <button mat-icon-button color="primary" (click)="askQuestion()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+
+

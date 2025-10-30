@@ -1,0 +1,84 @@
+<app-header [message]="'Checkout'"></app-header>
+<div style="background: #ede7f6;">
+  <mat-card class="checkout-card mt-0" >
+  <h2 class="section-title">Shipping Information</h2>
+  <form #shipmentForm="ngForm" (ngSubmit)="onSubmit(shipmentForm)" class="form-grid">
+    <div class="form-column">
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput name="first" [ngModel]="shipment().firstName" (ngModelChange)="firstNameChanged($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput name="last" [ngModel]="shipment().lastName" (ngModelChange)="lastNameChanged($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput name="country" [ngModel]="shipment().country" (ngModelChange)="countryChanged($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Province</mat-label>
+        <input matInput name="province" [ngModel]="shipment().province" (ngModelChange)="provinceChanged($event)" required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-column">
+      <mat-form-field appearance="outline">
+        <mat-label>Town</mat-label>
+        <input matInput name="town" [ngModel]="shipment().town" (ngModelChange)="townChanged($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Address line 1</mat-label>
+        <input matInput name="line1" [ngModel]="shipment().addressLine1" (ngModelChange)="addressLine1Changed($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Postal code</mat-label>
+        <input matInput name="postal" [ngModel]="shipment().postalCode" (ngModelChange)="postalCodeChanged($event)" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Phone number</mat-label>
+        <input matInput name="phone" [ngModel]="shipment().phoneNumber" (ngModelChange)="phoneNumberChanged($event)" required>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </div>
+  </form>
+</mat-card>
+
+<mat-card class="checkout-card" >
+  <h2 class="section-title">Order Summary</h2>
+  <div class="product-list">
+    @for(product of order().products; track product.id; let i = $index) {
+      <mat-card class="product-card">
+        <img mat-card-image [src]="product.savingOption === 0 ? product.url : imageUrls()[i]" />
+        <mat-card-content>
+          <div class="product-details">
+            <span>{{ product.productName }}</span>
+            <strong>{{ product.price }} RON</strong>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+  <div class="total-line">Total: <strong>{{ order().total }} RON</strong></div>
+</mat-card>
+
+
+
+@if(link()) {
+  <mat-card class="checkout-card confirm-payment">
+    <p><strong>Payment pending:</strong></p>
+    <a [href]="link()" class="confirm-link">Click here to confirm payment</a>
+  </mat-card>
+}
+@else{
+  <div class="action-section">
+    <button mat-raised-button color="primary" (click)="placeOrder()">Place Order</button>
+  </div>
+}
+</div>
+
+
+<app-notification></app-notification>

@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/scss/bootstrap";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+/* 1. Dezactivează doar gri-ul default de la Angular Material */
+:root {
+  --mdc-list-list-item-focus-state-layer-color: transparent;
+  --mdc-list-list-item-pressed-state-layer-color:#F0EEF7;
+  --mdc-list-list-item-selected-container-color: transparent;
+}
+
+

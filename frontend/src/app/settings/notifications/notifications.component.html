@@ -1,0 +1,31 @@
+
+<div style="background-color: white;border-radius:20px;box-shadow: 0 4px 12px rgba(0,0,0,0.1);" class="p-3 w-100 h-100">
+
+  <h1 >Notifications <mat-icon>notifications_active</mat-icon></h1>
+
+<div class="d-flex flex-column gap-2">
+  <h3 class="fw-bold">Notify me about...</h3>
+  <mat-checkbox [ngModel]="preferences().offers" (ngModelChange)="offersChanged($event)" class="ps-3">
+    Special offers and discounts
+  </mat-checkbox>
+  <mat-checkbox [ngModel]="preferences().orderStatus" (ngModelChange)="orderStatusChanged($event)" class="ps-3">
+    The status of my order
+  </mat-checkbox>
+  <mat-checkbox [ngModel]="preferences().newArrivals" (ngModelChange)="newArrivalsChanged($event)" class="ps-3">
+    New arrivals
+  </mat-checkbox>
+</div>
+
+<div class="d-flex flex-column gap-2 mt-3">
+  <h3 class="fw-bold">Notify me via...</h3>
+  <mat-checkbox [ngModel]="preferences().viaEmail" (ngModelChange)="viaEmailChanged($event)" class="ps-3">
+    Email
+  </mat-checkbox>
+  <mat-checkbox [ngModel]="preferences().viaPush" (ngModelChange)="viaPushChanged($event)" class="ps-3">
+    In-App Notifications
+  </mat-checkbox>
+</div>
+
+<button  mat-raised-button color="primary" class="mt-5"  (click)="savePreferences()">save preferences</button>
+
+</div>

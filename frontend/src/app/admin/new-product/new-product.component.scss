@@ -1,0 +1,43 @@
+form{
+  background: #efe3fa;
+}
+.section {
+  border-left: 4px solid #7e57c2; /* mov accent */
+  background: white; /* fundal foarte deschis mov */
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(126, 87, 194, 0.1); /* umbră subtilă mov */
+  transition: transform 0.2s ease;
+  display:flex;
+  flex-direction: column;
+}
+
+.section:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 8px rgba(126, 87, 194, 0.2);
+}
+
+
+img{
+  width:170px;
+  height:170px;
+  border-radius:15px;
+}
+
+.deleteButton{
+  mat-icon{
+    color:white;
+    background-color: red;
+    border-radius: 50%;
+  }
+}
+.review {
+  background: #f9f5ff; /* un mov foarte deschis, diferit de .section */
+  border: 1px solid #e0cfff; /* o linie subtilă mov */
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(126, 87, 194, 0.08);
+}
+

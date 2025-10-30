@@ -1,0 +1,22 @@
+<div class="d-flex flex-column order">
+<div class="d-flex flex-wrap gap-1">
+  @for(product of order().products;track product.id;let i=$index){
+    <mat-card appearance="outlined">
+        @if(product.savingOption==0){
+          <img mat-card-image [src]="product.url">
+        }
+        @else{
+          <img mat-card-image [src]="imageUrls()[i]">
+        }
+      <mat-card-content class="d-flex justify-content-between p-0 ps-2">
+        <div class="d-flex flex-column">
+          <div style="font-size: 11px;">{{product.productName}}</div>
+          <div style="font-size: 11px;">{{product.price}} RON</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  }
+</div>
+    <div class="fw-bold m-2">Total: {{order().total}}</div>
+</div>
