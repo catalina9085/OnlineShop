@@ -17,4 +17,6 @@ export class ProductModel{
   inWishlist:boolean=false;
   category:CategoryModel=new CategoryModel();
   reviews:ReviewModel[]=[];
+  imageUrl:string='';
+  reviewSummary:string='';
 }

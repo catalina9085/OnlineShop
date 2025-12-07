@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.online.shop.components.*;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class ProductService {
 	private final RestTemplate restTemplate;
 	private final ReviewRepository reviewRepo;
 	private final String AI_API_URL = "http://127.0.0.1:8000/";
-	
+
 	//public ProductService(RestTemplate restTemplate,ProductRepository productRepo,CategoryRepository categoryRepo, UserRepository userRepo,ImageRepo imageRepo,ProductClickRepo clickRepo,ReviewRepository reviewRepo) { this.productRepo=productRepo; this.categoryRepo=categoryRepo; this.userRepo=userRepo; this.imageRepo=imageRepo; this.restTemplate=restTemplate; this.clickRepo=clickRepo; this.reviewRepo=reviewRepo; }
 	public User getUser(Principal principal) {
 		return userRepo.findByUsername(principal.getName()).orElseThrow(()->new ResourceNotFoundException("User not found!"));
@@ -63,27 +64,86 @@ public class ProductService {
 			.peek(product->product.setInWishlist(user.getWishList().getProducts().contains(product)))
 			.collect(Collectors.toList());
 	}
-	
-	
-	public List<Product> filterProducts(Filter filter,Principal principal) {
+
+
+	public List<Product> filterProducts(Filter filter, Principal principal) {
+
 		List<Product> products;
-		
-		if(Objects.equals(filter.getRecommendationType(),"for me"))
-			products=getRecommended(principal);
+
+		if (Objects.equals(filter.getRecommendationType(), "for me"))
+			products = getRecommended(principal);
 		else
 			products = getAllProducts(principal);
-		
-	    return products.stream()
-	        .filter(p -> filter.getCategories() == null || filter.getCategories().isEmpty()
-	            || filter.getCategories().contains(p.getCategory().getName()))
-	        .filter(p -> {
-	            String keyword = filter.getSearchKeyword();
-	            return keyword == null ||
-	                   p.getName().toLowerCase().contains(keyword.toLowerCase()) ||
-	                   p.getDescription().toLowerCase().contains(keyword.toLowerCase());
-	        })
-	        .sorted(getComparator(filter))
-	        .collect(Collectors.toList());
+
+		// filtre normale
+		products = products.stream()
+				.filter(p ->
+						filter.getCategories() == null
+								|| filter.getCategories().isEmpty()
+								|| filter.getCategories().contains(
+								p.getCategory().getName()
+						)
+				)
+				.collect(Collectors.toList());
+
+		// semantic search
+		if (filter.getSearchKeyword() != null
+				&& !filter.getSearchKeyword().isBlank()) {
+
+			List<ProductSearchItem> items = products.stream()
+					.map(p -> new ProductSearchItem(
+							p.getId(),
+							p.getName(),
+							p.getDescription(),
+							p.getCategory().getName()
+					))
+					.toList();
+
+			SemanticSearchRequest req =
+					new SemanticSearchRequest(
+							filter.getSearchKeyword(),
+							items
+					);
+
+			SemanticSearchResponse response;
+
+			try {
+
+				response = restTemplate.postForObject(
+						AI_API_URL + "/semantic-search",
+						req,
+						SemanticSearchResponse.class
+				);
+
+				if (response == null)
+					response = new SemanticSearchResponse();
+
+			} catch (RestClientException e) {
+
+				response = new SemanticSearchResponse();
+			}
+
+			if (response.getProductIds() != null) {
+
+				List<Long> ids = response.getProductIds();
+
+				products = products.stream()
+						.filter(p -> ids.contains(p.getId()))
+						.sorted(
+								Comparator.comparingInt(
+										p -> ids.indexOf(p.getId())
+								)
+						)
+						.collect(Collectors.toList());
+			}
+		}
+
+		// sortarea existentă
+		products = products.stream()
+				.sorted(getComparator(filter))
+				.collect(Collectors.toList());
+
+		return products;
 	}
 	
 	private Comparator<Product> getComparator(Filter filter) {
@@ -138,6 +198,23 @@ public class ProductService {
 			product.setRating(productRating);
 			productRepo.save(product);
 		}
+
+		List<String> reviews = reviewRepo.findAllByProduct(product)
+				.stream()
+				.map(Review::getText)
+				.toList();
+
+		ReviewSummaryRequest req=new ReviewSummaryRequest(product.getName(),reviews);
+		ReviewSummaryResponse response;
+		try {
+			response = restTemplate.postForObject(AI_API_URL + "/summarize-reviews",req, ReviewSummaryResponse.class);
+			if(response==null) response=new ReviewSummaryResponse();
+		}catch(RestClientException e) {
+			response=new ReviewSummaryResponse();
+		}
+
+		product.setReviewSummary(response.getSummary());
+		productRepo.save(product);
 		//product.getReviews().add(newReview);
 		//userRepo.save(user);
 		//productRepo.save(product);
@@ -166,11 +243,13 @@ public class ProductService {
         }catch(RestClientException e) {
         	response=new HashMap<>();
         }
+		System.out.println("\n\n\n\nAI response = " + response+"\n\n\n\n");
 		List<Integer> recommendedInts = (List<Integer>) response.getOrDefault("similar",Collections.EMPTY_LIST);
+		System.out.println("\n\n\n\nIDs from AI = " + recommendedInts+"\n\n\n\n");
 		List<Long> recommended = recommendedInts.stream()
 			    .map(Integer::longValue)
 			    .toList();
-		return recommended.stream().map(id->getProductOrThrow(productId)).toList();
+		return recommended.stream().map(id->getProductOrThrow(id)).toList();
 	}
 	
 	public void saveClick(Principal principal,Long productId) {

@@ -20,7 +20,8 @@ export const productStore=signalStore(
     reviews:[] as ReviewModel[],
     images:[] as ProductImageModel[],
     imageUrls:[] as string[],
-    message:''
+    message:'',
+    generatingDescription: false
   }),
   withMethods((state,adminService=inject(AdminService),imageService=inject(ProductImageService))=>({
     loadCategories:rxMethod<void>(
@@ -121,6 +122,41 @@ export const productStore=signalStore(
         Object.assign(updatedProduct,{...state.newProduct(),files:files});
         patchState(state,{newProduct:updatedProduct})
       }
+    },
+    generateDescription(product: NewProductModel) {
+      const body = {
+        name: product.name,
+        category: product.productCategory || product.newCategory || 'General',
+        price: Number(product.price),
+        keywords: product.name
+      };
+
+      console.log("generate description body:", body);
+      adminService.generateDescription(body).subscribe({
+        next: description => {
+          console.log("description received:", description);
+
+          const updatedProduct = new NewProductModel();
+
+          Object.assign(updatedProduct, {
+            ...state.newProduct(),
+            description: description
+          });
+
+          patchState(state, {
+            newProduct: updatedProduct,
+            generatingDescription: false,
+            message: ''
+          });
+        },
+        error: err => {
+          console.log("generate description error:", err);
+          patchState(state, {
+            generatingDescription: false,
+            message: 'Description could not be generated.'
+          });
+        }
+      });
     }
   })),
   withHooks({

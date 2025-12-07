@@ -4,11 +4,7 @@ import java.util.Base64;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,8 +29,10 @@ public class OrderProduct {
 	private String public_id;
 	
 	//baza de date
-	
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
 	private String imageBase64;
+
 	private int savingOption;
 	
 	@ManyToOne

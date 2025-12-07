@@ -38,11 +38,6 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Description</mat-label>
-      <input matInput name="description" [ngModel]="product().description" (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {description: $event}))" required>
-    </mat-form-field>
-
-    <mat-form-field>
       <mat-label>Price</mat-label>
       <input matInput type="number" name="price" [ngModel]="product().price" (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {price: $event}))" required>
     </mat-form-field>
@@ -56,18 +51,41 @@
       <mat-label>Stock</mat-label>
       <input matInput type="number" name="stock" [ngModel]="product().stock" (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {stock: $event}))" min="1" required>
     </mat-form-field>
+
+    <div class="d-flex gap-2 align-items-center">
+      <mat-form-field class="flex-grow-1">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          name="description"
+          [ngModel]="product().description"
+          (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {description: $event}))"
+          required
+        >
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="button"
+        (click)="store.generateDescription(product())"
+        [disabled]="store.generatingDescription() || !product().name"
+      >
+        {{ store.generatingDescription() ? 'Generating...' : 'Generate AI' }}
+      </button>
+    </div>
   </div>
 
   <div class="section">
     <h3 class="fw-bold">Category</h3>
     <mat-form-field>
       <mat-label>New category(optional)</mat-label>
-      <input matInput name="category" [ngModel]="product().newCategory" (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {newCategory: $event}))">
+      <input matInput name="category" [ngModel]="product().newCategory" (ngModelChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {newCategory: $event.value}))">
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Select existing categories</mat-label>
-      <mat-select [value]="product().productCategory" (selectionChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {productCategory: $event}))">
+      <mat-select [value]="product().productCategory" (selectionChange)="store.updateProduct(Object.assign(emptyProduct(), product(), {productCategory: $event.value}))">
         @for (category of store.categories(); track category.name) {
           <mat-option [value]="category.name">{{ category.name }}</mat-option>
         }

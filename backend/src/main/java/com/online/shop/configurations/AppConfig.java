@@ -9,19 +9,19 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 public class AppConfig {
 	
 	 @Bean
-	    public RestTemplate restTemplate() {
-	        return new RestTemplate();
-	    }
+	 public RestTemplate restTemplate() {
+		 return new RestTemplate();
+	 }
 
-	     @Bean
-	     public CommonsRequestLoggingFilter logFilter() {
-	         CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
-	         filter.setIncludeQueryString(true);
-	         filter.setIncludePayload(true);
-	         //filter.setMaxPayloadLength(10000); // cât vrei să vezi din body
-	         filter.setIncludeHeaders(true);
-	         filter.setAfterMessagePrefix("REQUEST DATA: ");
-	         return filter;
-	     }
+	 @Bean
+	 public CommonsRequestLoggingFilter logFilter() {
+		 CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+		 filter.setIncludeQueryString(true);
+		 filter.setIncludePayload(true);
+		 //filter.setMaxPayloadLength(10000); // cât vrei să vezi din body
+		 filter.setIncludeHeaders(true);
+		 filter.setAfterMessagePrefix("REQUEST DATA: ");
+		 return filter;
+	 }
 	
 }

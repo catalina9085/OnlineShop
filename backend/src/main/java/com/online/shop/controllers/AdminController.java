@@ -4,15 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import com.online.shop.components.GenerateDescriptionRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.online.shop.dtos.AddProductRequest;
 import com.online.shop.entities.Order;
@@ -122,5 +116,16 @@ public class AdminController {
 	public ResponseEntity<Map<String,Object>> getOverview(){
 		return ResponseEntity.ok(adminService.getOverview());
 	}
-	
+
+	@PostMapping("/products/generate-description")
+	public ResponseEntity<String> generateDescription(@RequestBody GenerateDescriptionRequest request) {
+		String description = adminService.generateDescription(
+				request.getName(),
+				request.getCategory(),
+				request.getPrice(),
+				request.getKeywords()
+		);
+
+		return ResponseEntity.ok(description);
+	}
 }

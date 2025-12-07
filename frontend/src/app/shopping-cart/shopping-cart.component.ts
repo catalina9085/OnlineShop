@@ -30,7 +30,17 @@ export class ShoppingCartComponent {
 
   constructor(private cartService:CartService,private imageService:ProductImageService,
               private router:Router) {
-    this.cartService.getItems().subscribe(items=>this.items.set(items));
+    this.cartService.getItems().subscribe(items=>{
+      const itemsWithImages = items.map(item => ({
+        ...item,
+        product: {
+          ...item.product,
+          imageUrl: this.imageService.getImageUrlFromBase64(item.product)
+        }
+      }));
+
+      this.items.set(itemsWithImages);
+    });
   }
 
   getImageUrl(product:ProductModel){

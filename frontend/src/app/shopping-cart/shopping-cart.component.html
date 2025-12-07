@@ -13,7 +13,7 @@
           <img mat-card-image [src]="item.product.images[0].url" [routerLink]="['/product',item.product.id]">
         }
         @else{
-          <img mat-card-image [src]="getImageUrl(item.product)" [routerLink]="['/product',item.product.id]">
+          <img mat-card-image [src]="item.product.imageUrl" [routerLink]="['/product',item.product.id]">
         }
         <div class="d-flex flex-column fs-6">
           <b>{{item.product.name}}</b>

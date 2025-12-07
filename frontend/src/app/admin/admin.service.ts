@@ -5,6 +5,7 @@ import {ProductModel} from '../shared/domain/product.model';
 import {OverviewModel} from './domain/overview.model';
 import {RevenueModel} from './domain/revenue.model';
 import {OrderModel} from '../shared/domain/order.model';
+import {NewProductModel} from './domain/newProduct.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,19 @@ export class AdminService {
 
   getOrders(){
     return this.http.get<OrderModel[]>('http://localhost:8080/admin/orders');
+  }
+
+  generateDescription(product: {name: string,category:string, price:number,keywords:string }) {
+    return this.http.post(
+      "http://localhost:8080/admin/products/generate-description",
+      {
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        keywords: product.name
+      },
+      { responseType: 'text' }
+    );
   }
 
 }

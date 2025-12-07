@@ -52,6 +52,8 @@ public class ProductController {
 	@GetMapping("/{productId}")
 	public ResponseEntity<Map<String, Object>> getProduct(@PathVariable Long productId,Principal principal){
 		List<Product> recommended=productService.getSimilarProducts(productId);
+		System.out.println("Recommended:");
+		recommended.forEach(p -> System.out.println(p.getId() + " " + p.getName()));
 		Product product=productService.getProductById(productId,principal);
 		return ResponseEntity.ok(Map.of("product",product,"recommended",recommended));
 	}

@@ -9,14 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,7 +32,10 @@ public class Product {
 	private Long sales;
 	private boolean inWishlist;
 
-	
+	@Lob
+	@Column(columnDefinition = "LONGTEXT")
+	private String reviewSummary;
+
 	@OneToMany(mappedBy="product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Review> reviews=new ArrayList<>();
 	

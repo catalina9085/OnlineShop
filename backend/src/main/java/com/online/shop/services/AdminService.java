@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.online.shop.components.GenerateDescriptionRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.online.shop.configurations.ResourceNotFoundException;
@@ -46,7 +48,8 @@ public class AdminService {
 	private final NotificationsService notifService;
 	private final CategoryRepository categoryRepo;
 	private final ImageRepo imageRepo;
-	
+	private final RestTemplate restTemplate;
+	private final String AI_API_URL = "http://127.0.0.1:8000/";
 	
 	public Category getExistentCategory(String name,Product product) {
 		Category category= categoryRepo.findByName(name).orElseThrow(()->new ResourceNotFoundException("Category not found!"));
@@ -66,7 +69,8 @@ public class AdminService {
 	}
 	
 	
-	public Product addNewProduct(AddProductRequest request) throws IOException {		int savingOption=request.getSavingOption();
+	public Product addNewProduct(AddProductRequest request) throws IOException {
+		int savingOption=request.getSavingOption();
 		Product product=new Product(request.getName(),request.getDescription(),request.getPrice(),request.getStock(),LocalDateTime.now());
 		
 		String newCategory=request.getNewCategory();
@@ -296,5 +300,23 @@ public class AdminService {
 		List<Order> orders=orderRepo.findAll();
 		return orders;
 	}
-	
+
+	public String generateDescription(String name, String category, Double price, String keywords) {
+		GenerateDescriptionRequest request =
+				new GenerateDescriptionRequest(name, category, price, keywords);
+
+		Map<String, Object> response = restTemplate.postForObject(
+				AI_API_URL + "generate-description",
+				request,
+				Map.class
+		);
+
+		if (response == null || !response.containsKey("description")) {
+			return "";
+		}
+
+		return response.get("description").toString();
+	}
+
+
 }

@@ -48,6 +48,8 @@ export class ProductComponent implements OnInit{
       this.productService.getProduct(this.productId()).subscribe(res=>{
         this.product.set(res.product);
         this.recommended.set(res.recommended);
+        console.log(this.product());
+        console.log("Summary: ",this.product().reviewSummary);
         this.imageUrls.set(this.imageService.getImageUrlsForProduct(res.product));
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
@@ -57,8 +59,9 @@ export class ProductComponent implements OnInit{
   ngOnInit() {
   }
 
-  getStars(rating: number) {
-    return new Array(rating);
+  getStars(rating: number|null|undefined) {
+    if(!rating) return [];
+    return new Array(Math.floor(rating));
   }
 
   addToCart() {
